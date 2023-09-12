@@ -17,16 +17,37 @@ public class Pruebas {
 		EntityManager em = fabrica.createEntityManager();
 		
 		
-		Query query =em.createNativeQuery("{call findAll_usuarios()}",TbUsuario.class);
+		/*Query query =em.createNativeQuery("{call findAll_usuarios()}",TbUsuario.class);
 		
 		List<TbUsuario> lstUsuarios = query.getResultList();
+		
+		//Mostrar cantidad de usuarios
+		System.out.println("nro de usuarios:" +lstUsuarios.size());
+		System.out.println("==============================================");*/
+		
+		
+		
+		Query query =em.createNativeQuery("{call usp_validaAcceso(?,?)}",TbUsuario.class);
+		query.setParameter(1, "U001@gmail.com");
+		query.setParameter(2, "10001");
+		
+		TbUsuario u = (TbUsuario)query.getSingleResult();
+		if(u==null){
+			System.out.println("El usuario no existe");
+		}else{
+			System.out.println("Bienvenido:"+u.getNomUsua());
+		}
+				
 		
 		/*List<TbUsuario> lstUsuarios = em.createQuery("Select a From TbUsuario a", TbUsuario.class).getResultList();
 		System.out.println("==============================================");*/
 		
 		//Mostrar cantidad de usuarios
-		System.out.println("nro de usuarios:" +lstUsuarios.size());
-		System.out.println("==============================================");
+		/*System.out.println("nro de usuarios:" +lstUsuarios.size());
+		System.out.println("==============================================");*/
+		
+		
+		
 		
 		//Listar todos los usuarios
 		/*System.out.println("Lista de usuarios:");
